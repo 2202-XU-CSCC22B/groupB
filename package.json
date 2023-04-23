@@ -1,5 +1,5 @@
 {
-  "name": "property-pass",
+  "name": "exit-entry-property-pass-control",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "core-js": "^3.8.3",
+    "mongoose": "^7.0.4",
+    "validator": "^13.9.0",
     "vue": "^3.2.13"
   },
   "devDependencies": {
