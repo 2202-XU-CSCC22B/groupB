@@ -1,0 +1,14 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "server side for property pass control",
+  "main": "api.js",
+  "scripts": {
+    "start": "nodemon server.js --port 3080"
+  },
+  "author": "Zenia Gersana <zfgersana@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
