@@ -1,5 +1,6 @@
 <template>
   <div class="wrapper">
+    <div id="title">Active Passes</div>
     <PassApproval/>
   </div>
 </template>
@@ -19,5 +20,12 @@ export default {
 <style scoped>
 .wrapper{
   margin: 0 auto;
+}
+
+#title{
+  font-family: var(--header);
+  font-size: 24px;
+  text-transform: uppercase;
+  letter-spacing: 5px;
 }
 </style>

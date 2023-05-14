@@ -41,29 +41,45 @@ app.get("/check_approval/:passId", async (request, response) => {
 
     const isApproved =
       pass.rcv.signed === true &&
-      pass.appr.signed === true &&
-      pass.gappr.some(item => item.approved === true) &&
+      pass.appr.approved === true &&
+      pass.gtappr.some(item => item.approved === true) &&
       pass.ver.signed === true;
       
     if (isApproved) {
-      pass.done = true; // Set the 'done' field to true
-      await pass.save(); // Save the updated pass document
+      if (!pass.done) {
+        pass.done = true; // Set the 'done' field to true
+        try {
+          await pass.save(); // Save the updated pass document
+          response.send({ message: "approved" });
+        } catch (error) {
+          console.log(error); // Log the error for debugging
+          response.status(500).send({ message: "An error occurred while saving the pass." });
+        }
+      } else {
+        response.send({ message: "approved" });
+      }
 
-      response.send({ message: "The pass is approved" });
     } else {
       const unapprovedItems = [];
-      if (pass.rcv.signed === false) {
-        unapprovedItems.push("rcv");
+
+      if (pass.appr.approved === false) {
+        unapprovedItems.push(`Approver <strong>${pass.appr.name} (${pass.appr.title})</strong> has not signed.`);
       }
-      pass.gappr.forEach((item, index) => {
-        if (item.approved === false) {
-          unapprovedItems.push(`appr[${index}]`);
-        }
-      });
+      
       if (pass.ver.signed === false) {
-        unapprovedItems.push("ver");
+        unapprovedItems.push(`Verifier <strong>${pass.ver.name} (${pass.ver.title})</strong> has not signed.`);
       }
-      response.send({ message: "The pass is not fully approved", unapprovedItems });
+
+      if (pass.rcv.signed === false) {
+        unapprovedItems.push(`Receiver <strong>${pass.rcv.name}</strong> has not signed.`);
+      }
+
+      const approvedGtapprItems = pass.gtappr.filter(item => item.approved === true);
+      if (approvedGtapprItems.length === 0) {
+        unapprovedItems.push("<strong>Gate Approval</strong> has not been signed.");
+      }
+
+      response.send({ message: "unapproved", unapprovedItems });
     }
   } catch (error) {
     console.log(error);

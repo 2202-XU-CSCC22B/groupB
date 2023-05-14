@@ -2,26 +2,17 @@ const mongoose=require('mongoose');
 const dbSchema = mongoose.Schema({
   remarks: {
     type: String,
-    default: ''
   },
 
   nature: {
-    typ: {
+    type: {
       type: String,
       enum: ['sales', 'trans', 'prop', 'repr', 'repl', 'borr', 'etc']
     },
     spec: {
       type: String,
-      default: ''
     },
-    receipt_num: {
-      type: String,
-      default: ''
-    },
-    reqs: {
-      type: String,
-      enum: ['xor', 'atfmr', 'ass', 'req2borr', 'etc']
-    }
+
   },
 
   ptcs: [{
@@ -45,22 +36,18 @@ const dbSchema = mongoose.Schema({
     },
     sign: {
       type: String,
-      default: ''
     }
   },
 
   ver: {
     title: {
       type: String,
-      default: ''
     },
     name: {
       type: String,
-      default: ''
     },
     sign: {
       type: String,
-      default: ''
     },
     signed: {
       type: Boolean,
@@ -68,14 +55,12 @@ const dbSchema = mongoose.Schema({
     }
   },
 
-  gappr: [{
+  gtappr: [{
     title: {
       type: String,
-      default: ''
     },
     name: {
       type: String,
-      default: ''
     },
     approved: {
       type: Boolean,
@@ -86,11 +71,9 @@ const dbSchema = mongoose.Schema({
   appr: {
     title: {
       type: String,
-      default: ''
     },
     name: {
       type: String,
-      default: ''
     },
     approved: {
       type: Boolean,
@@ -101,11 +84,9 @@ const dbSchema = mongoose.Schema({
   rcv: {
     name: {
       type: String,
-      default: ''
     },
     sign: {
       type: String,
-      default: ''
     },
     signed: {
       type: Boolean,
@@ -127,41 +108,57 @@ const dbSchema = mongoose.Schema({
 
 dbSchema.pre('validate', function(next) {
   if (this.nature.type === 'sales') {
-    this.schema.add({
+    this.nature.schema = {
       orn: {
         type: String,
-      }
-    });
+        required: true
+      },
+    }
+    this.nature._reqs = 'xuor';
+
   } else if (this.nature.type === 'trans' || this.nature.type === 'prop') {
-    this.schema.add({
+    this.nature.schema = {
       from: {
         type: String,
+        required: true
       },
       to: {
         type: String,
+        required: true
       },
       tfno: {
         type: String,
+        required: true
       }
-    });
+    }
+    this.nature._reqs = 'atfmr';
+
   } else if (this.nature.type === 'repr' || this.nature.type === 'repl') {
-    this.schema.add({
+    this.nature.schema = {
       warranty: {
         type: Boolean,
+        required: true
       },
       company: {
         type: String,
+        required: true
       }
-    });
+    };
+    this.nature._reqs = 'ass';
+
   } else if (this.nature.type === 'borr') {
-    this.schema.add({
+    this.nature.schema = {
       location: {
         type: String,
+        required: true
       },
       return: {
         type: Date,
+        required: true
       }
-    });
+    }
+
+    this.nature._reqs = 'req2borr';
   }
   next();
 });

@@ -16,6 +16,12 @@ export default {
 </script>
 
 <style>
+:root{
+  --header: Georgia, Times New Roman, serif;
+  --text: Avenir, Helvetica, Arial, sans-serif;
+  --tColor: #404455;
+}
+
 html, body{
   margin: 0;
   height: 100%;
@@ -27,7 +33,7 @@ html, body{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #404455;
 }
 
 nav {
@@ -36,7 +42,9 @@ nav {
 
 nav a {
   font-weight: bold;
-  color: #2c3e50;
+  margin: 0 5px;
+  color: #404455;
+  text-decoration: none;
 }
 
 nav a.router-link-exact-active {
