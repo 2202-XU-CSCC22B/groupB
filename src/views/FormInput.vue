@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import FileInput from "@/components/FileInput.vue";
-import SubmitButton from "@/components/SubmitButton.vue";
+import FileInput from "@/file_upload/FileInput.vue";
+import SubmitButton from "@/file_upload/SubmitButton.vue";
 
 export default {
   name: "FormInput",

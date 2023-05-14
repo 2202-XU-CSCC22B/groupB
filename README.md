@@ -1,6 +1,6 @@
 # exit-entry-property-pass-control
-In partial fulfillment of the requirements 
-**of CSCC 22 B**
+In partial fulfillment of the requirements\
+**of CSCC 22 B**\
 **Software Engineering**
 
 ## Project setup

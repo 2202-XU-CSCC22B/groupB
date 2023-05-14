@@ -1,11 +1,13 @@
 //Importing express module
 const express = require('express');
 const mongoose = require('mongoose');
-const Router = require("./routes")
+const cors = require('cors');
+const Router = require("./routes");
 
 mongoose.set("strictQuery", false);
- 
+
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 const PORT = 3080;

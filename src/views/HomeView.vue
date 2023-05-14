@@ -1,18 +1,23 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="wrapper">
+    <PassApproval/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import PassApproval from "@/pass_appr/PassApproval.vue";
 
 export default {
   name: 'HomeView',
   components: {
-    HelloWorld
+    PassApproval
   }
 }
 </script>
+
+<style scoped>
+.wrapper{
+  margin: 0 auto;
+}
+</style>

@@ -4,6 +4,7 @@ const dbSchema = mongoose.Schema({
     type: String,
     default: ''
   },
+
   nature: {
     typ: {
       type: String,
@@ -22,6 +23,7 @@ const dbSchema = mongoose.Schema({
       enum: ['xor', 'atfmr', 'ass', 'req2borr', 'etc']
     }
   },
+
   ptcs: [{
     item: {
       type: String
@@ -36,6 +38,7 @@ const dbSchema = mongoose.Schema({
       type: Number
     }
   }],
+
   req: {
     name: {
       type: String
@@ -45,6 +48,7 @@ const dbSchema = mongoose.Schema({
       default: ''
     }
   },
+
   ver: {
     title: {
       type: String,
@@ -63,7 +67,8 @@ const dbSchema = mongoose.Schema({
       default: false
     }
   },
-  appr: [{
+
+  gappr: [{
     title: {
       type: String,
       default: ''
@@ -77,6 +82,22 @@ const dbSchema = mongoose.Schema({
       default: false
     }
   }],
+
+  appr: {
+    title: {
+      type: String,
+      default: ''
+    },
+    name: {
+      type: String,
+      default: ''
+    },
+    approved: {
+      type: Boolean,
+      default: false
+    }
+  },
+
   rcv: {
     name: {
       type: String,
@@ -89,50 +110,61 @@ const dbSchema = mongoose.Schema({
     signed: {
       type: Boolean,
       default: false
-    }
+    },
+  },
+
+  done:{
+    type: Boolean,
+    default: false
+  }
+},
+{
+  timestamps: { 
+    createdAt: 'created', 
+    updatedAt: 'updated' 
   }
 });
 
 dbSchema.pre('validate', function(next) {
-    if (this.nature.type === 'sales') {
-      this.schema.add({
-        orn: {
-          type: String,
-        }
-      });
-    } else if (this.nature.type === 'trans' || this.nature.type === 'prop') {
-      this.schema.add({
-        from: {
-          type: String,
-        },
-        to: {
-          type: String,
-        },
-        tfno: {
-          type: String,
-        }
-      });
-    } else if (this.nature.type === 'repr' || this.nature.type === 'repl') {
-      this.schema.add({
-        warranty: {
-          type: Boolean,
-        },
-        company: {
-          type: String,
-        }
-      });
-    } else if (this.nature.type === 'borr') {
-      this.schema.add({
-        location: {
-          type: String,
-        },
-        return: {
-          type: Date,
-        }
-      });
-    }
-    next();
-  });
+  if (this.nature.type === 'sales') {
+    this.schema.add({
+      orn: {
+        type: String,
+      }
+    });
+  } else if (this.nature.type === 'trans' || this.nature.type === 'prop') {
+    this.schema.add({
+      from: {
+        type: String,
+      },
+      to: {
+        type: String,
+      },
+      tfno: {
+        type: String,
+      }
+    });
+  } else if (this.nature.type === 'repr' || this.nature.type === 'repl') {
+    this.schema.add({
+      warranty: {
+        type: Boolean,
+      },
+      company: {
+        type: String,
+      }
+    });
+  } else if (this.nature.type === 'borr') {
+    this.schema.add({
+      location: {
+        type: String,
+      },
+      return: {
+        type: Date,
+      }
+    });
+  }
+  next();
+});
 
-const PassForm = mongoose.model("process", dbSchema);
+const PassForm = mongoose.model("processes", dbSchema);
 module.exports = PassForm;
