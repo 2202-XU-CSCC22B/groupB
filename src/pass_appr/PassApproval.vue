@@ -7,7 +7,7 @@
           <div class="date">{{ formatDate(pass.created) }}</div>
         </div>
 
-        <div class="header">
+        <div class="header" style="margin-bottom: 8px">
           <div id="requestor">Requested by <strong>{{ pass.req.name }}</strong></div>
           <button id="seamen" @click="pass.showAllItems = !pass.showAllItems">
             {{ pass.showAllItems ? 'Hide Item Details' : 'Show Item Details' }}
@@ -18,6 +18,7 @@
           <div><strong>{{ fieldNames[key] || key }}:</strong> {{ fieldNames[entry] || entry }}</div>
         </div>
         <br>
+
         <div v-if="pass.showAllItems">
           <div v-for="(entry, key) in pass.ptcs" :key="key">
             <div v-for="(value, prop) in entry" :key="prop">
@@ -38,6 +39,7 @@
             <span v-html="pass.unapprovedItems.join('<br>')"></span>
           </div>
         </div>
+
       </div>
     </div>
   </div>
@@ -118,17 +120,16 @@ export default {
   border-radius: 4px;
   box-sizing: border-box;
   color: var(--tColor);
-
   font-family: var(--text);
   font-size: 15px;
   font-weight: 400;
-  padding: 4px 12px;
+  padding: 5px 12px;
   transition: 0.2s;
 }
 
 #seamen:hover{
+  background-color: #e0e0e7;
   cursor: pointer;
-  background-color: #e0e0ec;
 }
 .header{
   align-items: center;
@@ -151,13 +152,12 @@ export default {
 }
 
 #id {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
 }
 
 #requestor{
-  line-height: 1; 
-  margin-bottom: 8px;
+  font-size: 16px;
 }
 .box.success {
   background-color: #e4f5e4;
