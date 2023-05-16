@@ -12,6 +12,8 @@
     "nodemon": "^2.0.22"
   },
   "dependencies": {
-    "cors": "^2.8.5"
+    "axios": "^1.4.0",
+    "cors": "^2.8.5",
+    "mongoose": "^7.1.1"
   }
 }
