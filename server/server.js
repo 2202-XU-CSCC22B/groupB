@@ -14,13 +14,12 @@ const PORT = 3080;
 
 const user = "zen"
 const pass = "RRqQveYMsiMRzgIR"
-const cluster = "main" //eeppc
-const name = "test"
-const gen = "mdgajbf" //xm9nfsr
+const cluster = "cluster"
+const name = "main"
 
 //Connection to the mongodb database
 mongoose.connect(
-    `mongodb+srv://${user}:${pass}@${cluster}.${gen}.mongodb.net/${name}?retryWrites=true&w=majority`, 
+    `mongodb+srv://${user}:${pass}@${cluster}.mdgajbf.mongodb.net/${name}?retryWrites=true&w=majority`, 
     {
     useNewUrlParser: true,
     useUnifiedTopology: false
@@ -37,3 +36,4 @@ app.use(Router);
 app.listen(PORT, () => {
   console.log(`Server is running at port ${PORT}`);
 });
+

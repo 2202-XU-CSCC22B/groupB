@@ -1,7 +1,7 @@
 <template>
-  <div class="wrapper">
-      <div class="dash">
-        <div id="title">Active Passes</div>
+  <div>
+    <div class="dash" style="  width: 600px; text-align: left;">
+      <h1>Active Passes</h1>
       <PassApproval/>
     </div>
   </div>
@@ -9,32 +9,21 @@
 
 <script>
 // @ is an alias to /src
-import PassApproval from "@/pass_appr/PassApproval.vue";
+import PassApproval from "@/home/PassApproval.vue";
 
 export default {
   name: 'HomeView',
   components: {
-    PassApproval
+    PassApproval,
   }
 }
 </script>
 
 <style scoped>
-.wrapper{
-  margin: 0 auto;
-}
-
 .dash{
   width: auto;
-  padding: 40px 150px;
+  padding: 40px 100px;
   border-left: 2px solid #ccccd3; 
   border-right: 2px solid #ccccd3; 
-}
-
-#title{
-  font-family: var(--header);
-  font-size: 24px;
-  text-transform: uppercase;
-  letter-spacing: 5px;
 }
 </style>

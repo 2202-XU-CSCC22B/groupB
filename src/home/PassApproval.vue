@@ -161,8 +161,8 @@ export default {
   font-size: 16px;
 }
 .box.success {
-  background-color: #e4f5e4;
-  border: 3px solid #258a25;
+  background-color: #e9f4f5;
+  border: 3px solid #14ccbd;
 }
 
 .box.error {
