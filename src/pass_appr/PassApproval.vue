@@ -117,13 +117,13 @@ export default {
 <style scoped>
 #seamen{
   background-color: #f2f2f8;
-  border-radius: 4px;
+  border-radius: 8px;
   box-sizing: border-box;
   color: var(--tColor);
   font-family: var(--text);
   font-size: 15px;
-  font-weight: 400;
-  padding: 5px 12px;
+  text-transform: uppercase;
+  padding: 6px 12px;
   transition: 0.2s;
 }
 
@@ -131,6 +131,7 @@ export default {
   background-color: #e0e0e7;
   cursor: pointer;
 }
+
 .header{
   align-items: center;
   display: flex;

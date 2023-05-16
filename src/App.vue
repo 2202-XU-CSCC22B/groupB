@@ -1,9 +1,11 @@
 <template>
   <div class="container">
-  <nav>
-    <router-link to="/">Home</router-link>
-    <router-link to="/form">FormInput</router-link>
-  </nav>
+    <div class="top">
+      <nav>
+      <router-link to="/">Home</router-link>
+      <router-link to="/form">FormInput</router-link>
+      </nav>
+    </div>
   <router-view/>
 </div>
 </template>
@@ -37,7 +39,7 @@ html, body{
 }
 
 nav {
-  padding: 30px;
+  padding: 10px 0px;
 }
 
 nav a {
@@ -56,6 +58,11 @@ nav a.router-link-exact-active {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+}
+
+.top{
+  border-bottom: 2px solid #ccccd3;
+  width: 100%;
 }
 
 </style>
