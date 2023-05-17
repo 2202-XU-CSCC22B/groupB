@@ -3,11 +3,6 @@
         <div id="top-text">
         {{ currentDate }}
         </div>
-
-        <nav>
-            <router-link to="/">Home</router-link>
-            <router-link to="/form">FormInput</router-link>
-        </nav>
     </div>
 </template>
 

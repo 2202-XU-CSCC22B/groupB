@@ -65,6 +65,7 @@ export default {
         this.onChange(files);
       }
     },
+    
     removeFile(index) {
       this.selectedFiles.splice(index, 1);
       const files = this.selectedFiles.map((file) => file.name);

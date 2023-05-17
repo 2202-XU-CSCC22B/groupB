@@ -23,7 +23,7 @@ export default {
 .dash{
   width: auto;
   padding: 40px 100px;
-  border-left: var(--border);
-  border-right: var(--border);
+  border-left: var(--borGrey);
+  border-right: var(--borGrey);
 }
 </style>

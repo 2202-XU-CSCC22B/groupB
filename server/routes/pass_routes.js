@@ -1,11 +1,6 @@
 const express = require("express");
-const PassForm = require("../model");
+const PassForm = require("../models/pass_model");
 const app = express();
-
-app.use((req, res, next) => {
-  res.setHeader('Cache-Control', 'no-store');
-  next();
-});
 
 app.post("/passes/add", async (request, response) => {
     const pass = new PassForm(request.body);
@@ -87,7 +82,7 @@ app.get("/passes/check_approval/:passId", async (request, response) => {
   }
 }); 
 
-app.put("/passes/upd/:id", async (request, response) => {
+app.put("/passes/:id", async (request, response) => {
   const { id } = request.params;
   const update = request.body;
 
@@ -103,7 +98,7 @@ app.put("/passes/upd/:id", async (request, response) => {
   }
 });
 
-app.delete("/passes/del/:id", async (request, response) => {
+app.delete("/passes/:id", async (request, response) => {
   const { id } = request.params;
 
   try {

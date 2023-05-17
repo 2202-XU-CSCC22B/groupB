@@ -1,16 +1,19 @@
 <template>
-  <div class="form-container">
-    <h2 class="form-title">Upload Files</h2>
-    <form @submit.prevent="submitForm">
-      <div class="form-field">
-        <label class="form-label">Choose files to attach:</label>
-        <file-input label="Attach files" :onChange="handleFileChange" />
-        <p class="form-note">Accepted file types: PDF, Excel, JPG, PNG, Word</p>
-      </div>
-      <div class="form-field">
-        <submit-button label="Submit" />
-      </div>
-    </form>
+  <div class="overlay">
+    <div class="form-container">
+      <h2 class="form-title">Upload Files</h2>
+      <form @submit.prevent="submitForm">
+        <div class="form-field">
+          <label class="form-label">Choose files to attach:</label>
+          <file-input label="Attach files" :onChange="handleFileChange" />
+          <p class="form-note">Accepted file types: PDF, Excel, JPG, PNG, Word</p>
+        </div>
+        <div class="form-field">
+          <submit-button label="Submit" />
+          <button @click="closeOverlay">Close</button>
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -32,9 +35,12 @@ export default {
     submitForm() {
       // Submit the form data
       console.log("Form submitted");
-      // Redirect to the submission page
-      this.$router.push("/submission");
+      this.closeOverlay();
     },
+    
+    closeOverlay() {
+      this.$emit('close-overlay');
+    }
   },
 };
 </script>
@@ -73,5 +79,18 @@ export default {
   font-size: 14px;
   color: #888;
   margin-top: 5px;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

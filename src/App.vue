@@ -27,14 +27,15 @@ export default {
   --tColor1: #e9ebf1;
   --tColor2: #404455;
   --text: Avenir, Helvetica, Arial, sans-serif;
-  --border: 2px solid #c2c8d3;
+  --borGrey: 1px solid #c2c8d3;
+  --borBlue: 1px solid #6db0e0;
 }
 
 html, body{
   font-size: 16px;
   height: 100%;
   margin: 0;
-  background-color: #edf0f3;
+  background-color: #ffffff;
 }
 
 #app {
