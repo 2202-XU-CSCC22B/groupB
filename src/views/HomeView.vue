@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="dash" style="  width: 600px; text-align: left;">
-      <h1>Active Passes</h1>
+      <div id="top-text">Active Passes</div>
       <PassApproval/>
     </div>
   </div>
@@ -23,7 +23,7 @@ export default {
 .dash{
   width: auto;
   padding: 40px 100px;
-  border-left: 2px solid #ccccd3; 
-  border-right: 2px solid #ccccd3; 
+  border-left: var(--border);
+  border-right: var(--border);
 }
 </style>

@@ -1,4 +1,7 @@
 <template>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Playfair+Display:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <div class="container">
     <div class="wrapper">
       <PanelLeft/>
@@ -20,21 +23,24 @@ export default {
 
 <style>
 :root{
-  --header: Georgia, Times New Roman, serif;
-  --tColor: #404455;
+  --header: Poppins, Arial, sans-serif;
+  --tColor1: #e9ebf1;
+  --tColor2: #404455;
   --text: Avenir, Helvetica, Arial, sans-serif;
+  --border: 2px solid #c2c8d3;
 }
 
 html, body{
   font-size: 16px;
   height: 100%;
   margin: 0;
+  background-color: #edf0f3;
 }
 
 #app {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
-  color: #4a4e5f;
+  color: var(--tColor2);
   font-family: Avenir, Helvetica, Arial, sans-serif;
   text-align: center;
 }
@@ -51,14 +57,12 @@ html, body{
   flex-direction: row;
 }
 
-h1{
+#top-text {
   font-family: var(--header);
-  color: #313442;
   font-size: 26px;
-  font-style: italic;
-  text-transform: uppercase;
-  font-weight: bold;
+  font-weight: 900;
   letter-spacing: 2px;
+  text-transform: uppercase;
   margin: 0;
 }
 </style>

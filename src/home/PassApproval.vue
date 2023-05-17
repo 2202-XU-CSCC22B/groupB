@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-for="pass in passes" :key="pass._id">
-      <div :class="['box', { 'success': pass.approvalStatus, 'error': pass.unapprovedItems.length > 0 }]">
+      <div class='box'>
         <div class="header">
           <div id="id">{{ pass._id }}</div>
           <div class="date">{{ formatDate(pass.created) }}</div>
@@ -29,17 +29,19 @@
         </div>
        
         <br>
-        <div v-if="pass.approvalStatus == 'approved'">
-          <div id="label">{{ pass.approvalStatus }}</div>
-        </div>
-        
-        <div v-else-if="pass.approvalStatus == 'unapproved'">
-          <div id="label">{{ pass.approvalStatus }}</div>
-          <div id="item">
-            <span v-html="pass.unapprovedItems.join('<br>')"></span>
+        <div :class="['status', { 'success': pass.approvalStatus, 'error': pass.unapprovedItems.length > 0 }]">
+          <div v-if="pass.approvalStatus == 'approved'">
+            <div id="label">{{ pass.approvalStatus }}</div>
           </div>
-        </div>
+          
+          <div v-else-if="pass.approvalStatus == 'unapproved'">
+            <div id="label">{{ pass.approvalStatus }}</div>
+            <div id="item">
+              <span v-html="pass.unapprovedItems.join('<br>')"></span>
+            </div>
+          </div>
 
+        </div>
       </div>
     </div>
   </div>
@@ -53,7 +55,8 @@ export default {
   name: 'PassApproval',
   data() {
     return {
-      passes: []
+      passes: [],
+      currentDate: ''
     };
   },
   methods: {
@@ -68,7 +71,7 @@ export default {
     },
 
     checkApproval(pass) {
-      axinst.get(`/check_approval/${pass._id}`)
+      axinst.get(`/passes/check_approval/${pass._id}`)
         .then(response => {
           if (response.data.message === 'approved') {
             pass.approvalStatus = response.data.message;
@@ -100,6 +103,15 @@ export default {
         .catch(error => {
           console.log(error);
         });
+    },
+
+    setCurrentDate() {
+      // Get the current date
+      var currentDate = new Date();
+
+      // Format the date
+      var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      this.currentDate = currentDate.toLocaleDateString(undefined, options);
     }
   },
   created() {
@@ -110,16 +122,20 @@ export default {
     fieldNames() {
       return fieldNames;
     }
+  },
+
+  mounted() {
+    this.setCurrentDate();
   }
 }
 </script>
 
 <style scoped>
+
 #seamen{
   background-color: #f2f2f8;
   border-radius: 8px;
   box-sizing: border-box;
-  color: var(--tColor);
   font-family: var(--text);
   font-size: 15px;
   text-transform: uppercase;
@@ -160,14 +176,12 @@ export default {
 #requestor{
   font-size: 16px;
 }
-.box.success {
-  background-color: #e9f4f5;
-  border: 3px solid #14ccbd;
+.status.success {
+  color: #0a911c;
 }
 
-.box.error {
-  background-color: #f7e5e7;
-  border: 3px solid #ff3a4b;
+.status.error {
+  color: #d41b2a;
 }
 
 .box {
@@ -178,5 +192,6 @@ export default {
   padding: 20px;
   text-align: left;
   width: 600px;
+  border: var(--border);
 }
 </style>

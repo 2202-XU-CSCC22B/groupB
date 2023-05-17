@@ -1,5 +1,5 @@
 const express = require("express");
-const PassForm = require("./model");
+const PassForm = require("../model");
 const app = express();
 
 app.use((req, res, next) => {
@@ -7,7 +7,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.post("/add_pass", async (request, response) => {
+app.post("/passes/add", async (request, response) => {
     const pass = new PassForm(request.body);
   
     try {
@@ -30,7 +30,7 @@ app.get("/passes", async (request, response) => {
     }
   });
 
-app.get("/check_approval/:passId", async (request, response) => {
+app.get("/passes/check_approval/:passId", async (request, response) => {
   const passId = request.params.passId;
   try {
     const pass = await PassForm.findById(passId);
@@ -85,6 +85,37 @@ app.get("/check_approval/:passId", async (request, response) => {
     console.log(error);
     response.status(500).send({ error: error.message });
   }
-});  
+}); 
+
+app.put("/passes/upd/:id", async (request, response) => {
+  const { id } = request.params;
+  const update = request.body;
+
+  try {
+    const pass = await PassForm.findByIdAndUpdate(id, update, { new: true });
+    if (!pass) {
+      return response.status(404).send({ error: "Pass not found" });
+    }
+    response.send(pass);
+  } catch (error) {
+    console.log(error);
+    response.status(500).send({ error: error.message });
+  }
+});
+
+app.delete("/passes/del/:id", async (request, response) => {
+  const { id } = request.params;
+
+  try {
+    const pass = await PassForm.findByIdAndDelete(id);
+    if (!pass) {
+      return response.status(404).send({ error: "Pass not found" });
+    }
+    response.send({ message: "Pass deleted successfully" });
+  } catch (error) {
+    console.log(error);
+    response.status(500).send({ error: error.message });
+  }
+});
 
 module.exports = app;

@@ -1,7 +1,7 @@
 <template>
     <div class="left">
-        <div>
-            <h1>{{ currentDate }}</h1>
+        <div id="top-text">
+        {{ currentDate }}
         </div>
 
         <nav>
@@ -53,10 +53,11 @@ nav {
 }
 
 nav a {
-  color: #404455;
+  color: var(--tColor);
   font-weight: bold;
   margin-bottom: 10px;
   text-decoration: none;
+  text-transform: uppercase;
 }
 
 nav a.router-link-exact-active {
