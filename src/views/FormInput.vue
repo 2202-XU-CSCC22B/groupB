@@ -8,7 +8,7 @@
           <file-input label="Attach files" :onChange="handleFileChange" />
           <p class="form-note">Accepted file types: PDF, Excel, JPG, PNG, Word</p>
         </div>
-        <div class="form-field">
+        <div class="form-field" style="display: flex; justify-content: space-evenly; margin-bottom: 5px;">
           <submit-button label="Submit" />
           <button @click="closeOverlay">Close</button>
         </div>
@@ -48,6 +48,7 @@ export default {
 <style>
 /* Styles for the form container and header */
 .form-container {
+  text-align: center;
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
@@ -60,14 +61,14 @@ export default {
   font-weight: bold;
   color: #333;
   margin-top: 0;
-  margin-bottom: 20px;
-  text-align: center;
+  margin-bottom: 10px;
 }
 
 /* Styles for the form fields */
 .form-field {
   margin-bottom: 20px;
 }
+
 .form-label {
   font-size: 18px;
   font-weight: bold;

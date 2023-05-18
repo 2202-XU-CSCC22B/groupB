@@ -1,8 +1,10 @@
 <template>
-    <div class="plus">
-        <img src="../assets/plus.svg" @click="openOverlay">
+    <div style="padding: 0; margin: 0;">
+    <div class="square_btn">
+        <img src="../assets/file.png" @click="openOverlay">
         <UploadOverlay v-show="showOverlay" @close-overlay="closeOverlay" />
     </div>
+</div>
 </template>
 
 
@@ -31,34 +33,10 @@ import UploadOverlay from '../views/FormInput.vue';
 </script>
 
 
-<style scoped>
-    .wrapper{
-        height: inherit;
-        margin-top: 30px;
-        padding: 0 14px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .plus{
-        width: 40px;
-        height: 40px;
-        border: 1px solid #404455;
-        background-color: #dbdce2;
-        border-radius: 15px;
-        transition: 0.2s;
-    }
-
-    .plus:hover{
-        background-color: #b9bac9;
-        cursor: pointer;
-    }
-    
+<style>
     img{
-        width: 40px;
-        height: 40px;
+        width: 20px; 
+        height: 20px;
         filter: invert(27%) sepia(9%) saturate(1005%) hue-rotate(191deg) brightness(93%) contrast(96%);
     }
-
 </style>

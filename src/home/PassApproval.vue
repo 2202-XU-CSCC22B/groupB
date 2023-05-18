@@ -9,13 +9,20 @@
 
         <div class="header" style="margin-bottom: 8px">
           <div id="requestor">Requested by <strong>{{ pass.req.name }}</strong></div>
-          <button id="seamen" @click="pass.showAllItems = !pass.showAllItems">
-            {{ pass.showAllItems ? 'Hide Details' : 'Show Details' }}
-          </button>
         </div>
         
-        <div v-for="(entry, key) in pass.nature" :key="key">
-          <div><strong>{{ fieldNames[key] || key }}:</strong> {{ fieldNames[entry] || entry }}</div>
+        <div style="font-size: 18px; font-weight: bold; text-align: center; margin: 15px 0 5px 0; text-transform: uppercase;"> {{ fieldNames[pass.nature.type] }} </div>
+        <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-around;">
+          <div v-for="(entry, key) in pass.nature" :key="key">
+              <div class="entry">
+                <div id="top">
+                  {{ fieldNames[entry] || entry }}
+                </div>
+                <div id="bottom">
+                  {{ fieldNames[key] || key }} 
+              </div>
+            </div>
+          </div>
         </div>
 
         <div v-if="pass.showAllItems">
@@ -23,8 +30,7 @@
             <div class="wrap_box" v-for="(entry, key) in pass.ptcs" :key="key">
               <div v-for="(value, prop) in entry" :key="prop">
                 <div v-if="prop !== '_id' && prop !== 'tag' ">
-                  <strong>{{ fieldNames[prop] || prop }}:</strong> 
-                  {{ fieldNames[value] || value }}
+                  <strong>{{ fieldNames[prop] || prop }}</strong>: {{ fieldNames[value] || value }} 
                 </div>
               </div>
             </div>
@@ -45,7 +51,16 @@
           <span v-html="pass.unapprovedItems.join('<br>')"></span>
         </div>
       </div>
-      <div class="p_wrap" v-if="pass.approvalStatus == 'unapproved'"><UploadButton/></div>
+      <div class="p_wrap">
+        <div class="square_btn" @click="pass.showAllItems = !pass.showAllItems">
+            <img style="height: 18px; width: 18px;" v-if="!pass.showAllItems" src="../assets/plus.png">
+            <img style="height: 18px; width: 18px;" v-else src="../assets/minus.png">
+        </div>
+
+        <div v-if="pass.approvalStatus == 'unapproved'">
+          <UploadButton/>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -140,13 +155,31 @@ export default {
 </script>
 
 <style scoped>
+.entry{
+  margin: 6px 5px;
+  text-align: center;
+  flex-grow: 1;
+}
+.entry #top{
+  font-size: 15px;
+  font-weight: bold;
+}
+.entry #bottom{
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #6d6d75;
+}
 .p_wrap{
   margin-top: 30px;
   padding: 0 14px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
 }
+.p_wrap * {
+  margin: 4px;
+}
+
 .item_wrap {
   display: flex;
   flex-wrap: wrap;
@@ -155,30 +188,34 @@ export default {
 }
 
 .wrap_box {
-  background-color: #e1ecf5;
-  border: var(--borBlue);
+  font-size: 15px;
   border-radius: 6px;
   flex-grow: 1;
-  margin: 0 5px;
+  margin: 0 5px 10px 5px;
   padding: 12px;
+  background-color: #e7e9f0;
 }
 
 .wrap_box:first-child {
-  margin: 0 5px 0 0 !important;
+  margin: 0 5px 10px 0 !important;
 }
 
 .wrap_box:last-child {
-  margin-left: 0 0 0 5px  !important;
+  margin: 0 0 10px 5px  !important;
 }
 
 .wrap_box:only-child{
   margin: 0;
 }
 
-#seamen{
-  background-color: #e1ecf5;
-  border: var(--borBlue);
-  color: var(--text);
+.wrap_box:nth-child(n+3) {
+  margin-left: 0 !important;
+}
+
+#details{
+  background-color: #dbdce2;
+  border: 0;
+  color: var(--tColor2);
   border-radius: 8px;
   box-sizing: border-box;
   font-family: var(--text);
@@ -188,8 +225,9 @@ export default {
   transition: 0.2s;
 }
 
-#seamen:hover{
-  background-color: #c5ddf1;
+#details:hover{
+  background-color: #b9bac9;
+  color: #fff;
   cursor: pointer;
 }
 
@@ -222,12 +260,13 @@ export default {
 }
 
 #requestor{
-  font-size: 16px;
+  font-size: 14px;
+  text-transform: uppercase;
+  color: #6d6d75;
 }
 .status.success {
-  background-color: #e0f0de;
-  border: 1px solid #0a911c;
-  color: #0a911c;
+  background-color: #6bca49;
+  color: #ffffff;
 }
 
 .status.error {

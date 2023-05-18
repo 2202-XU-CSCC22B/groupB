@@ -25,7 +25,7 @@ export default {
 :root{
   --header: Poppins, Arial, sans-serif;
   --tColor1: #e9ebf1;
-  --tColor2: #404455;
+  --tColor2: #31333a;
   --text: Avenir, Helvetica, Arial, sans-serif;
   --borGrey: 1px solid #c2c8d3;
   --borBlue: 1px solid #6db0e0;
@@ -65,5 +65,21 @@ html, body{
   letter-spacing: 2px;
   text-transform: uppercase;
   margin: 0;
+}
+
+.square_btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: #dbdce2;
+  border-radius: 15px;
+  transition: 0.2s;
+}
+
+.square_btn:hover{
+    background-color: #b9bac9;
+    cursor: pointer;
 }
 </style>
