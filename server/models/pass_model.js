@@ -13,6 +13,14 @@ const dbSchema = mongoose.Schema({
       type: String,
     },
 
+    _reqs: {
+      type: String,
+    },
+  },
+
+  reqs_uploaded: {
+    type: Boolean,
+    default: false
   },
 
   ptcs: [{

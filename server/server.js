@@ -37,6 +37,11 @@ db.once("open", function () {
 app.use('/', passRouter);
 app.use('/', fileRouter);
 
+app.use((req, res, next) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  next();
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running at port ${PORT}`);
 });

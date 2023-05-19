@@ -24,10 +24,10 @@ export default {
 <style>
 :root{
   --header: Poppins, Arial, sans-serif;
-  --tColor1: #e9ebf1;
-  --tColor2: #31333a;
+  --tColor1: #957c33;
+  --tColor2: #2d303a;
   --text: Avenir, Helvetica, Arial, sans-serif;
-  --borGrey: 1px solid #c2c8d3;
+  --borGrey: 1px solid #d1d1d1;
   --borBlue: 1px solid #6db0e0;
 }
 
@@ -36,13 +36,14 @@ html, body{
   height: 100%;
   margin: 0;
   background-color: #ffffff;
+  color: var(--tColor2);
 }
 
 #app {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   color: var(--tColor2);
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   text-align: center;
 }
 
@@ -71,15 +72,15 @@ html, body{
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  background-color: #dbdce2;
-  border-radius: 15px;
+  width: 35px;
+  height: 35px;
+  background-color: #cebf80;
+  border-radius: 8px;
   transition: 0.2s;
 }
 
 .square_btn:hover{
-    background-color: #b9bac9;
+    background-color: #af9e5b;
     cursor: pointer;
 }
 </style>

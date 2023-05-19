@@ -37,6 +37,6 @@ import UploadOverlay from '../views/FormInput.vue';
     img{
         width: 20px; 
         height: 20px;
-        filter: invert(27%) sepia(9%) saturate(1005%) hue-rotate(191deg) brightness(93%) contrast(96%);
+        filter: invert(100%) sepia(0%) saturate(7499%) hue-rotate(173deg) brightness(102%) contrast(101%);
     }
 </style>

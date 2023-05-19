@@ -1,115 +1,119 @@
 const express = require("express");
 const PassForm = require("../models/pass_model");
 const app = express();
+const fieldNames = require("../fieldNames");
 
-app.post("/passes/add", async (request, response) => {
-    const pass = new PassForm(request.body);
-  
-    try {
-      await pass.save();
-      response.send(pass);
-    } catch (error) {
-      console.log(error);
-      response.status(500).send({error: error.message});
-    }
-})
+// Create a new pass
+app.post("/passes", async (req, res) => {
+  try {
+    const pass = new PassForm(req.body);
+    await pass.save();
+    res.status(201).send(pass);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: "Failed to create pass", message: error.message });
+  }
+});
 
-app.get("/passes", async (request, response) => {
-    const pass = await PassForm.find({});
-  
-    try {
-      response.send(pass);
-    } catch (error) {
-      console.log(error);
-      response.status(500).send({error: error.message});
-    }
-  });
+// Get all passes
+app.get("/passes", async (req, res) => {
+  try {
+    const passes = await PassForm.find({});
+    res.send(passes);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: "Failed to fetch passes", message: error.message });
+  }
+});
 
-app.get("/passes/check_approval/:passId", async (request, response) => {
-  const passId = request.params.passId;
+// Check pass approval status
+app.get("/passes/check_approval/:passId/", async (req, res) => {
+  const passId = req.params.passId;
+
   try {
     const pass = await PassForm.findById(passId);
     if (!pass) {
-      response.status(404).send({ message: "Pass not found" });
+      res.status(404).send({ message: "Pass not found" });
       return;
     }
 
     const isApproved =
       pass.rcv.signed === true &&
       pass.appr.approved === true &&
-      pass.gtappr.some(item => item.approved === true) &&
-      pass.ver.signed === true;
-      
+      pass.gtappr.some((item) => item.approved === true) &&
+      pass.ver.signed === true &&
+      pass.reqs_uploaded === true;
+
     if (isApproved) {
       if (!pass.done) {
         pass.done = true; // Set the 'done' field to true
-        try {
-          await pass.save(); // Save the updated pass document
-          response.send({ message: "approved" });
-        } catch (error) {
-          console.log(error); // Log the error for debugging
-          response.status(500).send({ message: "An error occurred while saving the pass." });
-        }
-      } else {
-        response.send({ message: "approved" });
+        await pass.save(); // Save the updated pass document
       }
-
+      res.send({ message: "approved" });
     } else {
       const unapprovedItems = [];
 
-      if (pass.appr.approved === false) {
+      if (!pass.reqs_uploaded) {
+        unapprovedItems.push(`Missing document: <strong>${fieldNames[pass.nature._reqs]}</strong>.`);
+      }
+
+      if (!pass.appr.approved) {
         unapprovedItems.push(`Approver <strong>${pass.appr.name} (${pass.appr.title})</strong> has not signed.`);
       }
-      
-      if (pass.ver.signed === false) {
+
+      if (!pass.ver.signed) {
         unapprovedItems.push(`Verifier <strong>${pass.ver.name} (${pass.ver.title})</strong> has not signed.`);
       }
 
-      if (pass.rcv.signed === false) {
+      if (!pass.rcv.signed) {
         unapprovedItems.push(`Receiver <strong>${pass.rcv.name}</strong> has not signed.`);
       }
 
-      const approvedGtapprItems = pass.gtappr.filter(item => item.approved === true);
+      const approvedGtapprItems = pass.gtappr.filter((item) => item.approved === true);
       if (approvedGtapprItems.length === 0) {
         unapprovedItems.push("<strong>Gate Approval</strong> has not been signed.");
       }
 
-      response.send({ message: "unapproved", unapprovedItems });
+      res.send({ message: "unapproved", unapprovedItems });
     }
   } catch (error) {
-    console.log(error);
-    response.status(500).send({ error: error.message });
+    console.error(error);
+    res.status(500).send({ error: "An error occurred while checking pass approval status", message: error.message });
   }
-}); 
+});
 
-app.put("/passes/:id", async (request, response) => {
-  const { id } = request.params;
-  const update = request.body;
+// Update a pass
+app.put("/passes/:id", async (req, res) => {
+  const { id } = req.params;
+  const update = req.body;
 
   try {
     const pass = await PassForm.findByIdAndUpdate(id, update, { new: true });
     if (!pass) {
-      return response.status(404).send({ error: "Pass not found" });
+      res.status(404).send({ error: "Pass not found" });
+      return;
     }
-    response.send(pass);
+    res.send(pass);
   } catch (error) {
-    console.log(error);
-    response.status(500).send({ error: error.message });
+    console.error(error);
+    res.status(500).send({ error: "Failed to update pass", message: error.message });
   }
 });
 
-app.delete("/passes/:id", async (request, response) => {
-  const { id } = request.params;
+// Delete a pass
+app.delete("/passes/:id", async (req, res) => {
+  const { id } = req.params;
 
   try {
     const pass = await PassForm.findByIdAndDelete(id);
     if (!pass) {
-      return response.status(404).send({ error: "Pass not found" });
+      res.status(404).send({ error: "Pass not found" });
+      return;
     }
-    response.send({ message: "Pass deleted successfully" });
+    res.send({ message: "Pass deleted successfully" });
   } catch (error) {
-    console.log(error);
-    response.status(500).send({ error: error.message });
+    console.error(error);
+    res.status(500).send({ error: "Failed to delete pass", message: error.message });
   }
 });
 

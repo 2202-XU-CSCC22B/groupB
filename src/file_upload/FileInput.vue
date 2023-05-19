@@ -14,10 +14,16 @@
 </template>
 
 <script>
+import axios from '@/../server/axios-config.js';
+
 export default {
   name: "FileInput",
   props: {
     label: {
+      type: String,
+      required: true,
+    },
+    passId: {
       type: String,
       required: true,
     },
@@ -27,7 +33,7 @@ export default {
     },
     maxFiles: {
       type: Number,
-      default: 10,
+      default: 2,
     },
   },
   data() {
@@ -36,7 +42,7 @@ export default {
     };
   },
   methods: {
-    handleFileInput(event) {
+    async handleFileInput(event) {
       const selectedFiles = Array.from(event.target.files);
       const allowedTypes = [
         "application/pdf",
@@ -61,6 +67,18 @@ export default {
         alert("Invalid file type.");
       } else {
         this.selectedFiles.push(...newFiles);
+        const formData = new FormData();
+        newFiles.forEach((file) => {
+          formData.append('file', file);
+        });
+        try {
+          const response = await axios.post(`/file/upload/${this.passId}`, formData);
+          console.log(response.data);
+          alert(`Successfully uploaded to pass ${this.passId}!`) // Handle the response from the server
+        } catch (error) {
+          console.error(error);
+          alert('File upload failed.');
+        }
         const files = this.selectedFiles.map((file) => file.name);
         this.onChange(files);
       }

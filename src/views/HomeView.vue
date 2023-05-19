@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="dash" style="  width: 600px; text-align: left;">
+    <div class="dash" style=" text-align: left;">
       <div id="top-text">Active Passes</div>
       <PassApproval/>
     </div>
@@ -22,7 +22,7 @@ export default {
 <style scoped>
 .dash{
   width: auto;
-  padding: 40px 100px;
+  padding: 40px 100px 100px 100px;
   border-left: var(--borGrey);
   border-right: var(--borGrey);
 }

@@ -24,7 +24,8 @@ const fieldNames = {
     repr: 'For Repair',
     req2borr: 'Request to Borrow Form',
     req: 'Requestor',
-    reqs: 'Attachments Required',
+    _reqs: 'Required',
+    reqs_uploaded: 'Required Attachments Uploaded?',
     return: 'Return',
     sales: 'Sales',
     sign: 'Signature',
@@ -44,4 +45,4 @@ const fieldNames = {
     xushs: 'XU Senior High School',
 }
 
-export default fieldNames;
+module.exports = fieldNames;
