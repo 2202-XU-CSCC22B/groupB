@@ -5,7 +5,7 @@
       <form @submit.prevent="submitForm">
         <div class="form-field">
           <label class="form-label">Choose files to attach:</label>
-          <file-input label="Attach files" :onChange="handleFileChange" />
+          <file-input label="Attach files" :passId="passId" :onChange="handleFileChange" />
           <p class="form-note">Accepted file types: PDF, Excel, JPG, PNG, Word</p>
         </div>
         <div class="form-field" style="display: flex; justify-content: space-evenly; margin-bottom: 5px;">
@@ -26,6 +26,12 @@ export default {
   components: {
     FileInput,
     SubmitButton,
+  },
+  props: {
+    passId: {
+      type: String,
+      required: true
+    }
   },
   methods: {
     handleFileChange(file) {

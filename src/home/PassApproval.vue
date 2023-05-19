@@ -1,78 +1,99 @@
 <template>
-    <div style="display: flex; flex-direction: row;" v-for="pass in passes" :key="pass._id">
-      <div class='box'>
-        <div class="header">
-          <div id="id">{{ pass._id }}</div>
-          <div class="date">{{ formatDate(pass.created) }}</div>
+  <div style="display: flex; flex-direction: row;" v-for="pass in passes" :key="pass._id">
+    <div class='box'>
+
+      <div class="header">
+        <div id="id">
+          {{ pass._id }}
         </div>
 
-        <div class="header" style="border-bottom: var(--borGrey); padding-bottom: 12px; margin-bottom: 8px">
-          <div id="subheader">Requested by <strong>{{ pass.req.name }}</strong></div>
-          <div id="subheader" style="font-size: 15px; margin-top: -3px;"><strong>{{ formatTime(pass.created) }}</strong></div>
+        <div class="date">
+          {{ formatDate(pass.created) }}
+        </div>
+      </div>
+
+      <div class="header" style="border-bottom: var(--borGrey); padding-bottom: 12px; margin-bottom: 8px">
+        <div id="subheader">
+          Requested by <strong>{{ pass.req.name }}</strong>
         </div>
         
-        <div class="fHeader"> 
-          {{ fieldNames[pass.nature.type] }} 
+        <div id="subheader" style="font-size: 15px; margin-top: -3px;">
+          <strong>{{ formatTime(pass.created) }}</strong>
         </div>
-
-        <div class="nature">
-          <div class="entry" v-for="(entry, key) in pass.nature" :key="key">
-              <div id="bottom">
-                {{ fieldNames[key] || key }}: 
-              </div>
-              <div id="top">
-                {{ fieldNames[entry] || entry }}
-              </div>      
-          </div>
-        </div>
-
-        <div class="b_wrap">
-          <div :class="['status', { 'success': pass.approvalStatus, 'error': pass.unapprovedItems.length > 0 }]">
-            <div v-if="pass.approvalStatus == 'approved'">
-              <div id="s_label">{{ pass.approvalStatus }}</div>
-            </div>
-            
-            <div v-else-if="pass.approvalStatus == 'unapproved'">
-              <div id="s_label">{{ pass.approvalStatus }}</div>
-            </div>
-          </div>
-
-          <div style= "display: flex; flex-direction: row;">
-            <div v-if="pass.approvalStatus == 'unapproved'">
-              <UploadButton :passId="pass._id" style="margin-right: 5px;"/>
-            </div>
-
-            <div class="square_btn" @click="pass.showAllItems = !pass.showAllItems">
-              <img style="height: 17px; width: 17px;" v-if="!pass.showAllItems" src="../assets/plus.png">
-              <img style="height: 17px; width: 17px;" v-else src="../assets/minus.png">
-            </div>
-          </div>
-        </div>
-
-        <div v-if="pass.showAllItems">
-          <div class ="fHeader" style="border-top: var(--borGrey); padding-top: 20px; ">Particulars</div>
-          <div class="item_wrap">
-            <div class="wrap_box" v-for="(entry, key) in pass.ptcs" :key="key">
-              <div v-for="(value, prop) in entry" :key="prop">
-                <div style="display: flex; flex-direction: row; align-items: center;" v-if="prop !== '_id' && prop !== 'tag' ">
-                  <div id="bottom">
-                    {{ fieldNames[prop] || prop }}: 
-                  </div>
-                  <div id="top">
-                    {{ fieldNames[value] || value }}
-                  </div> 
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div v-if="pass.showAllItems && pass.unapprovedItems.length > 0" id="item">
-          <span v-html="pass.unapprovedItems.join('<br>')"></span>
-        </div>
-
       </div>
+      
+      <div class="fHeader"> 
+        {{ fieldNames[pass.nature.type] }} 
+      </div>
+
+      <div class="nature">
+        <div class="entry" v-for="(entry, key) in pass.nature" :key="key">
+          <div id="bottom">
+            {{ fieldNames[key] || key }}: 
+          </div>
+
+          <div id="top">
+            {{ fieldNames[entry] || entry }}
+          </div>
+        </div>
+      </div>
+
+      <div class="b_wrap">
+
+        <div :class="['status', { 'success': pass.approvalStatus, 'error': pass.unapprovedItems.length > 0 }]">
+          <div v-if="pass.approvalStatus == 'approved'">
+            <div id="s_label">{{ pass.approvalStatus }}</div>
+          </div>
+          
+          <div v-else-if="pass.approvalStatus == 'unapproved'">
+            <div id="s_label">{{ pass.approvalStatus }}</div>
+          </div>
+        </div>
+
+        <div style= "display: flex; flex-direction: row;">
+
+          <div v-if="pass.approvalStatus == 'unapproved'">
+            <UploadButton :passId="pass._id" style="margin-right: 5px;"/>
+          </div>
+
+          <div class="square_btn" @click="pass.showAllItems = !pass.showAllItems">
+            <img style="height: 17px; width: 17px;" v-if="!pass.showAllItems" src="../assets/plus.png">
+            <img style="height: 17px; width: 17px;" v-else src="../assets/minus.png">
+          </div>
+
+        </div>
+      </div>
+
+      <div v-if="pass.showAllItems">
+        <div class ="fHeader" style="border-top: var(--borGrey); padding-top: 20px; ">
+          Particulars
+        </div>
+
+        <div class="item_wrap">
+          <div class="wrap_box" v-for="(entry, key) in pass.ptcs" :key="key">
+            <div v-for="(value, prop) in entry" :key="prop">
+              <div style="display: flex; flex-direction: row; align-items: center;" v-if="prop !== '_id' && prop !== 'tag' ">
+                
+                <div id="bottom">
+                  {{ fieldNames[prop] || prop }}: 
+                </div>
+
+                <div id="top">
+                  {{ fieldNames[value] || value }}
+                </div> 
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div v-if="pass.showAllItems && pass.unapprovedItems.length > 0" id="item">
+        <span v-html="pass.unapprovedItems.join('<br>')"></span>
+      </div>
+
     </div>
+  </div>
 </template>
 
 <script>
@@ -92,7 +113,6 @@ export default {
     };
   },
   methods: {
-    
     formatDate(date) {
       return new Date(date).toLocaleDateString('en-US', {
         month: 'long',
@@ -169,7 +189,7 @@ export default {
   border: var(--borGrey);
   display: flex;
   flex-direction: row;
-  margin: 0 auto 3px 0;
+  margin: 0 0 3px 0;
   padding: 16px 18px;
   width: auto;
 }
@@ -183,7 +203,7 @@ export default {
 }
 
 .entry:last-child{
-  margin: 0 auto 0 0;
+  margin: 0;
 }
 
 #top{
@@ -220,7 +240,7 @@ export default {
   flex-grow: 1;
   font-size: 15px;
   margin: 0 2.5px 5px 2.5px;
-  padding: 12px;
+  padding: 14px 16px ;
 }
 
 .wrap_box:first-child {

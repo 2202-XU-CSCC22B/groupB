@@ -25,5 +25,6 @@ export default {
   padding: 40px 100px 100px 100px;
   border-left: var(--borGrey);
   border-right: var(--borGrey);
+  background-color: #fff;
 }
 </style>

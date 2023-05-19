@@ -35,7 +35,7 @@ html, body{
   font-size: 16px;
   height: 100%;
   margin: 0;
-  background-color: #ffffff;
+  background-color: #eff0f1;
   color: var(--tColor2);
 }
 

@@ -33,10 +33,11 @@ export default {
 </script>
 
 <style scoped>
-
 .left{
   padding: 40px 20px;
   width: 250px;
+  background-color: #fff;
+  border-left: var(--borGrey);
 }
 
 nav {

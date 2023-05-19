@@ -2,7 +2,7 @@
     <div style="padding: 0; margin: 0;">
     <div class="square_btn">
         <img src="../assets/file.png" @click="openOverlay">
-        <UploadOverlay v-show="showOverlay" @close-overlay="closeOverlay" />
+        <UploadOverlay v-show="showOverlay" :passId="passId" @close-overlay="closeOverlay" />
     </div>
 </div>
 </template>
@@ -12,7 +12,12 @@
 import UploadOverlay from '../views/FormInput.vue';
     export default {
         name: 'UploadButton',
-        
+        props: {
+            passId: {
+            type: String,
+            required: true
+            }
+        },
         data() {
             return {
             showOverlay: false

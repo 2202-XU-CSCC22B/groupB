@@ -1,5 +1,6 @@
 const express = require("express");
 const File = require("../models/file_model");
+const PassForm = require("../models/pass_model");
 const app = express();
 const multer = require("multer");
 
@@ -21,8 +22,16 @@ app.post('/file/upload/:passId', upload.single('file'), async (req, res) => {
         // Save the file document to the database
         await file.save();
 
-        // Update the `reqs_uploaded` field in the pass model to true
-        await Pass.updateOne({ _id: passId }, { reqs_uploaded: true });
+        const pass = await PassForm.findById(passId);
+        if (!pass) {
+            res.status(404).send({ message: "Pass not found" });
+            return;
+        }
+
+        if (!pass.reqs_uploaded) {
+            pass.reqs_uploaded = true; // Set the 'done' field to true
+            await pass.save();
+        }
 
         res.send(`File uploaded successfully to ${passId}`);
     } catch (error) {
