@@ -34,7 +34,7 @@ db.once("open", function () {
 });
 
 // Routes
-app.use('/', passRouter);
+app.use('/passes', passRouter);
 app.use('/', fileRouter);
 
 app.use((req, res, next) => {

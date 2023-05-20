@@ -40,4 +40,19 @@ app.post('/file/upload/:passId', upload.single('file'), async (req, res) => {
     }
 });
 
+// Retrieve files associated with a specific pass ID
+app.get('/files/:passId', async (req, res) => {
+    try {
+        const passId = req.params.passId;
+
+        // Find files associated with the given pass ID
+        const files = await File.find({ pass: passId });
+
+        res.send(files);
+    } catch (error) {
+        console.error('Error retrieving files:', error);
+        res.status(500).send('Failed to retrieve files');
+    }
+});
+
 module.exports = app;

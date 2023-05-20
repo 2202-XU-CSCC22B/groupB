@@ -10,31 +10,35 @@
 
 <script>
 import UploadOverlay from '../views/FormInput.vue';
-    export default {
-        name: 'UploadButton',
-        props: {
-            passId: {
-            type: String,
-            required: true
-            }
-        },
-        data() {
-            return {
-            showOverlay: false
-            };
-        },
-        methods: {
-            openOverlay() {
-            this.showOverlay = true;
-            },
-            closeOverlay() {
-            this.showOverlay = false;
-            }
-        },
-        components: {
-            UploadOverlay
+export default {
+    name: 'UploadButton',
+    props: {
+        passId: {
+        type: String,
+        required: true
         }
+    },
+
+    data() {
+        return {
+        showOverlay: false
+        };
+    },
+
+    methods: {
+        openOverlay() {
+        this.showOverlay = true;
+        },
+        
+        closeOverlay() {
+        this.showOverlay = false;
+        }
+    },
+
+    components: {
+        UploadOverlay
     }
+}
 </script>
 
 

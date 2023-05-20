@@ -39,8 +39,8 @@
       </div>
 
       <div class="b_wrap">
-
         <div :class="['status', { 'success': pass.approvalStatus, 'error': pass.unapprovedItems.length > 0 }]">
+          
           <div v-if="pass.approvalStatus == 'approved'">
             <div id="s_label">{{ pass.approvalStatus }}</div>
           </div>
@@ -51,16 +51,18 @@
         </div>
 
         <div style= "display: flex; flex-direction: row;">
-
-          <div v-if="pass.approvalStatus == 'unapproved'">
+          <div v-if="pass.reqs_uploaded == false">
             <UploadButton :passId="pass._id" style="margin-right: 5px;"/>
+          </div>
+          <div v-else-if="pass.reqs_uploaded == true">
+            <ViewButton :passId="pass._id" style="margin-right: 5px;"/>
           </div>
 
           <div class="square_btn" @click="pass.showAllItems = !pass.showAllItems">
             <img style="height: 17px; width: 17px;" v-if="!pass.showAllItems" src="../assets/plus.png">
             <img style="height: 17px; width: 17px;" v-else src="../assets/minus.png">
           </div>
-
+          
         </div>
       </div>
 
@@ -100,11 +102,13 @@
 import axinst from '@/../server/axios-config.js';
 import fieldNames from '@/../server/fieldNames.js';
 import UploadButton from './UploadButton';
+import ViewButton from './ViewButton';
 
 export default {
   name: 'PassApproval',
   components: {
-    UploadButton
+    UploadButton,
+    ViewButton
   },
 
   data() {

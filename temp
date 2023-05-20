@@ -1,0 +1,181 @@
+<template>
+  <div class="slider-container">
+    <div class="slider-content" :style="{ left: currentPosition }">
+      <div class="slide">
+        <label>Nature of Transaction:</label>
+        <q-select v-model="selectedTransaction" :options="nature" @change="handleOptionChange"></q-select>
+
+        <div v-if="selectedTransaction.value === 'sales'">
+          <label>Official Receipt No.:</label>
+          <br>
+          <input type="text" v-model="sales_official_receipt" />
+          <br>
+          <label>Upload XU Official Receipt:</label>
+          <br>
+          <input type="file" @change="handleFileChange" />
+        </div>
+
+        <div v-if="selectedTransaction.value === 'transfer_loc'">
+          <label>From:</label>
+          <br>
+          <input type="text" v-model="transfer_from" />
+          <br>
+          <label>To:</label>
+          <br>
+          <input type="text" v-model="transfer_to" />
+          <br>
+          <label>Transfer Form No.:</label>
+          <br>
+          <input type="text" v-model="transfer_form_number" />
+          <br>
+          <label>Upload Accomplished Transfer Form w/ MR:</label>
+          <br>
+          <input type="file" @change="handleFileChange" />
+        </div>
+
+        <div v-if="selectedTransaction.value === 'repair_replacement'">
+          <label>Warranty availability:</label>
+          <q-select v-model="repair_warranty" :options="repair_or_replacement"></q-select>
+          <br>
+          <label>Company:</label>
+          <br>
+          <input type="text" v-model="repair_company" placeholder="Enter company" />
+          <br>
+          <label>Upload Assessment from CISO or PPO:</label>
+          <br>
+          <input type="file" @change="handleFileChange" />
+        </div>
+
+        <div v-if="selectedTransaction.value === 'borrowed'">
+          <label>Location:</label>
+          <br>
+          <input type="text" v-model="borrowed_location" placeholder="Enter full address" />
+          <br>
+          <label>Date item returned:</label>
+          <q-date v-model="borrowed_return_date" />
+          <br>
+          <label>Upload Request to Borrow Form:</label>
+          <br>
+          <input type="file" @change="handleFileChange" />
+        </div>
+
+        <div v-if="selectedTransaction.value === 'others'">
+          <label>Input your nature of transaction:</label>
+          <br>
+          <input type="text" v-model="others_description" placeholder="Enter description" />
+        </div>
+
+        <button type="next" @click="slideNext">Next</button>
+      </div>
+      <div class="slide2">
+        <label>hello</label>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { ref } from 'vue';
+import { QSelect } from 'quasar';
+
+export default {
+  name: 'FormPage',
+  components: {
+    QSelect
+  },
+  setup() {
+    const selectedTransaction = ref(''); // Initialize with the desired initial value
+
+    const nature = [
+      { label: 'Sales (Scraps, MRF, Vermi, Manresa Farm products, etc.)', value: 'sales' },
+      { label: 'Transfer Location / Property Donation', value: 'transfer_loc' },
+      { label: 'For Repair / Replacement', value: 'repair_replacement' },
+      { label: 'Borrowed items/equipments', value: 'borrowed' },
+      { label: 'Others', value: 'others' }
+    ];
+
+    const repairOrReplacement = [
+      { label: 'With Warranty', value: 'w_warranty' },
+      { label: 'Without Warranty', value: 'wo_warranty' }
+    ];
+
+    const handleOptionChange = () => {
+      if (selectedTransaction.value === 'sales') {
+        sales_official_receipt.value = '';
+      } else if (selectedTransaction.value === 'transfer_loc') {
+        transfer_from.value = '';
+        transfer_to.value = '';
+        transfer_form_number.value = '';
+      } else if (selectedTransaction.value === 'repair_replacement') {
+        repair_warranty.value = null;
+        repair_company.value = '';
+      } else if (selectedTransaction.value === 'borrowed') {
+        borrowed_location.value = '';
+        borrowed_return_date.value = null;
+      } else if (selectedTransaction.value === 'others') {
+        others_description.value = '';
+      } else {
+        console.log('*');
+      }
+    };
+
+    return {
+      selectedTransaction,
+      nature,
+      repair_or_replacement: repairOrReplacement,
+      handleOptionChange
+    };
+  },
+  data() {
+    return {
+      sales_official_receipt: '',
+      transfer_from: '',
+      transfer_to: '',
+      transfer_form_number: '',
+      repair_warranty: null,
+      repair_company: '',
+      borrowed_location: '',
+      borrowed_return_date: null,
+      others_description: '',
+      number_of_items: 0,
+      item_fields: [],
+      currentPosition: '0px',
+      slideWidth: 0
+    };
+  },
+  methods: {
+    handleFileChange(event) {
+      this.file = event.target.files[0];
+    },
+    slideNext() {
+      const slideContainer = document.querySelector('.slider-container');
+      const slideWidth = slideContainer.offsetWidth;
+      // Replace numSlides with the appropriate value
+      const numSlides = 2; // Assuming there are two slides
+      const maxWidth = slideWidth * (numSlides - 1);
+      const currentPositionValue = parseInt(this.currentPosition, 10);
+
+      if (currentPositionValue > -maxWidth) {
+        this.currentPosition = `${currentPositionValue - slideWidth}px`;
+        this.currentSlide += 1;
+      }
+    },
+    slideBack() {
+      const currentPositionValue = parseInt(this.currentPosition, 10);
+
+      if (currentPositionValue < 0) {
+        this.currentPosition = `${currentPositionValue + this.slideWidth}px`;
+      }
+    },
+    generateInputs() {
+      const numberOfInputs = parseInt(this.number_of_items);
+      this.item_fields = Array.from({ length: numberOfInputs }, () => ({
+        particulars: '',
+        propertyTag: '',
+        numberOfItems: 0,
+        amount: 0
+      }));
+    }
+  }
+};
+</script>
