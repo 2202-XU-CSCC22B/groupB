@@ -1,7 +1,4 @@
 <template>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Playfair+Display:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <div class="container">
     <div class="wrapper">
       <PanelLeft/>
@@ -11,7 +8,7 @@
 </template>
 
 <script>
-import PanelLeft from "@/home/PanelLeft.vue"
+import PanelLeft from "./home/PanelLeft.vue"
 
 export default {
   name: 'App',
@@ -47,11 +44,10 @@ html, body{
   text-align: center;
 }
 
-.container{
-  display: inline-block;
-  margin: 0 auto;
-  min-height: 100vh;
-  position: relative;
+.container {
+  display: flex;
+  justify-content: center;
+  height: 100%;
 }
 
 .wrapper{
@@ -74,7 +70,7 @@ html, body{
   justify-content: center;
   width: 35px;
   height: 35px;
-  background-color: #cebf80;
+  background-color: #9180ce;
   border-radius: 8px;
   transition: 0.2s;
 }
