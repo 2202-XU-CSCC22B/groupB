@@ -31,6 +31,14 @@ db.once("open", function () {
   console.log("Connected successfully");
 });
 
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'https://groupb.onrender.com');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  next();
+});
+
 // Routes
 app.use('/passes', passRouter);
 app.use('/', fileRouter);
