@@ -2,7 +2,7 @@ import { boot } from 'quasar/wrappers'
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: 'http://localhost:3080' // Replace with your Node server URL
+  baseURL: 'https://eeppc.onrender.com/' // Replace with your Node server URL
 });
 
 export default boot(({ app }) => {
